@@ -1,0 +1,50 @@
+<app-create-task 
+        *ngIf="showCreateTaskForm" 
+        (CloseForm)="CloseCreateTaskForm()"
+        (EmitTaskData)="CreateTask($event)"
+        (EmitUpdateTaskData)="UdpateTask($event)"
+        [taskId]="taskId"
+></app-create-task>
+
+<div class="dashboard-container">
+    <div style="display: flex;">
+        <div style="width: 50%">
+            <h2>Dashboard</h2>
+        </div>
+        <div style="width: 50%; text-align: right;">
+            <button class="create-task-btn" (click)="OpenCreateTaskForm()">Create Task</button>
+            <button class="create-task-btn" (click)="fetchTasksClicked()" >Fetch Tasks</button>
+            <button class="create-task-btn" (click)="DeleteAllTasks()">Clear Tasks</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="dashboard-item-container">
+            <div style="width: 100%;" *ngIf="allTasks.length < 1">
+                <h2 style="text-align: center;">No tasks has been created</h2>
+            </div>
+            <div class="task-item" *ngFor="let task of allTasks" [ngClass]="'task-'+task.status" >
+                <div class="task-title">
+                    <h3>{{task.title}}</h3>
+                </div>
+                <p><b>Assigned to: </b>{{task.assignedTo}}</p>
+                <p><b>Priority: </b>{{task.priority}}</p>
+                <p><b>Status: </b>{{task.status}}</p>
+                <div class="task-action-icons">
+                    <button class="task-action-btn" title="Detail">
+                        <!-- <i class="fa fa-info-circle" aria-hidden="true"></i> -->
+                        <fa-icon [icon]="infoIcon"></fa-icon>
+                    </button>
+                    <button (click)="EditTaskClicked(task.id)" class="task-action-btn" title="Edit">
+                        <!-- <i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
+                        <fa-icon [icon]="pencilIcon"></fa-icon>
+                    </button>
+                    <button (click)="DeleteTask(task.id)" class="task-action-btn" title="Delete">
+                        <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+                        <fa-icon [icon]="trashIcon"></fa-icon>
+                    </button>            
+                </div>
+            </div>
+    </div>
+</div>
